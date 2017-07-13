@@ -4,8 +4,21 @@ class App extends React.Component {
     
     this.state = {
       videos: window.exampleVideoData,
-      videoPlaying: window.exampleVideoData[0]
+      videoPlaying: window.exampleVideoData[0],
+      options: {
+        key: window.YOUTUBE_API_KEY,
+        query: '',
+        max: 5}
     };
+  }
+  
+  componentDidMount() {
+    this.props.searchYouTube(this.state.options, (data) => this.setState({ videos: data, videoPlaying: data[0] }));
+    // this.setState({
+    //   //videos: this.props.searchYouTube(this.state.options, (data) => data),
+    //   videoPlaying: this.state.videos[0]
+    // });
+    console.log(this.state.videos);
   }
   
   handleOnClick(video) {
@@ -34,4 +47,4 @@ class App extends React.Component {
 window.App = App;
 
 
-ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render(<App searchYouTube={window.searchYouTube}/>, document.getElementById('app'));
