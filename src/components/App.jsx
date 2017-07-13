@@ -7,30 +7,46 @@ class App extends React.Component {
       videoPlaying: window.exampleVideoData[0],
       options: {
         key: window.YOUTUBE_API_KEY,
-        query: '',
+        query: 'cats',
         max: 5}
     };
   }
   
   componentDidMount() {
     this.props.searchYouTube(this.state.options, (data) => this.setState({ videos: data, videoPlaying: data[0] }));
-    // this.setState({
-    //   //videos: this.props.searchYouTube(this.state.options, (data) => data),
-    //   videoPlaying: this.state.videos[0]
-    // });
-    console.log(this.state.videos);
   }
+  
+  componentDidUpdate() {
+    //this.props.searchYouTube(this.state.options, (data) => this.setState({ videos: data, videoPlaying: data[0] }));
+  }
+ 
   
   handleOnClick(video) {
     this.setState({
       videoPlaying: video
     });
   }
+  
+  handleSearch(searchedItem) {
+    this.props.searchYouTube(
+      {
+        key: window.YOUTUBE_API_KEY,
+        query: searchedItem,
+        max: 5 
+      }, (data) => this.setState({ videos: data, videoPlaying: data[0] }));
+    this.setState({
+      options: {
+        key: window.YOUTUBE_API_KEY,
+        query: searchedItem,
+        max: 5 
+      }
+    });
+  }
 
   render() {
     return (
   <div>
-    <Nav />
+    <Nav searchMe={this.handleSearch.bind(this)}/>
     <div className="col-md-7">
       <VideoPlayer video={this.state.videoPlaying}/>
     </div>
