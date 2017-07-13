@@ -3,7 +3,8 @@ class App extends React.Component {
     super(props);
     
     this.state = {
-      videoPlaying: this.props.videos[0]
+      videos: window.exampleVideoData,
+      videoPlaying: window.exampleVideoData[0]
     };
   }
   
@@ -21,7 +22,7 @@ class App extends React.Component {
       <VideoPlayer video={this.state.videoPlaying}/>
     </div>
     <div className="col-md-5">
-      <VideoList videoPlaying={this.handleOnClick.bind(this)} videos={this.props.videos}/>
+      <VideoList videoPlaying={this.handleOnClick.bind(this)} videos={this.state.videos}/>
     </div>
   </div>
     );
@@ -33,4 +34,4 @@ class App extends React.Component {
 window.App = App;
 
 
-ReactDOM.render(<App videos={window.exampleVideoData}/>, document.getElementById("app"));
+ReactDOM.render(<App />, document.getElementById('app'));
